@@ -80,7 +80,7 @@ partial class Form1
         listBoxRastreios.AccessibleName = "Dados rastreios";
         foreach (var objeto in rastrearCr.objetos)
         {
-            listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}");
+            listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
 
             foreach (var evento in objeto.eventos)
             {
