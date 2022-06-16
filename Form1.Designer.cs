@@ -52,6 +52,7 @@ partial class Form1
         }
         this.Controls.Add(campoEdic);
 
+        //botão rastrear
         System.Windows.Forms.Button botaoRastrear = ferramentas.CreateButton("Rastrear");
         this.Controls.Add(botaoRastrear);
         botaoRastrear.Click += Button1_Click;
@@ -121,6 +122,8 @@ partial class Form1
                 }
             }
         }
+        //selecionar o primeiro item por padrão
+        listBoxRastreios.SelectedIndex = 0;
 
         listBoxRastreios.Location = new System.Drawing.Point(200, 200);
         listBoxRastreios.Size = new System.Drawing.Size(100, 100);
