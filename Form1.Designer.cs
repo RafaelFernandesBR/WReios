@@ -98,6 +98,9 @@ partial class Form1
         {
             CodigosRastreios[0] = TextFBox.Text;
         }
+
+        var listBoxRastreios = new System.Windows.Forms.ListBox();
+        listBoxRastreios.AccessibleName = "Dados de rastreios";
         //percorrer os códigos de rastreios
         foreach (var CodigoRastreio in CodigosRastreios)
         {
@@ -105,8 +108,6 @@ partial class Form1
             Rastreando rastrear = new Rastreando(CodigoRastreio);
             var rastrearCr = rastrear.GetInfoRs();
 
-            var listBoxRastreios = new System.Windows.Forms.ListBox();
-            listBoxRastreios.AccessibleName = "Dados de "+CodigoRastreio;
             foreach (var objeto in rastrearCr.objetos)
             {
                 listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
@@ -128,13 +129,13 @@ partial class Form1
 
                 }
             }
-
-            listBoxRastreios.Location = new System.Drawing.Point(200, 200);
-            listBoxRastreios.Size = new System.Drawing.Size(100, 100);
-            this.Controls.Add(listBoxRastreios);
-            //copiar um item da lista com ctrl+c
-            listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
         }
+
+        listBoxRastreios.Location = new System.Drawing.Point(200, 200);
+        listBoxRastreios.Size = new System.Drawing.Size(100, 100);
+        this.Controls.Add(listBoxRastreios);
+        //copiar um item da lista com ctrl+c
+        listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
     }
 
     #endregion
