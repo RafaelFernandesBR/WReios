@@ -38,37 +38,28 @@ partial class Form1
         this.ClientSize = new System.Drawing.Size(800, 1000);
         this.Text = "WReios";
         Ras Ras = new Ras();
+        Ferramentas ferramentas = new Ferramentas();
         this.CodigoFile = Ras.GetTextFile();
-
-        //adicionar um campo de edição
-        var textBox1 = new System.Windows.Forms.TextBox();
-        textBox1.Multiline = true;
-        textBox1.Location = new System.Drawing.Point(12, 12);
-        textBox1.Name = "textBox1";
-        textBox1.Size = new System.Drawing.Size(100, 20);
-        textBox1.AccessibleName = "Digite o código de rastreio";
+        //adicionando o campo
+        System.Windows.Forms.TextBox campoEdic = null;
         if (CodigoFile != null)
         {
-            textBox1.Text = CodigoFile;
+            campoEdic = ferramentas.CampoTx(CodigoFile);
         }
-        textBox1.TabIndex = 0;
-        this.Controls.Add(textBox1);
+        else
+        {
+            campoEdic = ferramentas.CampoTx();
+        }
+        this.Controls.Add(campoEdic);
 
-        //criar um botão
-        var button1 = new System.Windows.Forms.Button();
-        button1.Text = "Rastrear";
-        button1.Location = new System.Drawing.Point(100, 100);
-        button1.Size = new System.Drawing.Size(100, 100);
-        this.Controls.Add(button1);
-        button1.Click += Button1_Click;
+        System.Windows.Forms.Button botaoRastrear = ferramentas.CreateButton("Rastrear");
+        this.Controls.Add(botaoRastrear);
+        botaoRastrear.Click += Button1_Click;
 
         //botão de salvar em arquivo
-        var SaveFile = new System.Windows.Forms.Button();
-        SaveFile.Text = "Salvar códigos atuais em um arquivo";
-        button1.Location = new System.Drawing.Point(100, 100);
-        SaveFile.Size = new System.Drawing.Size(150, 150);
-        this.Controls.Add(SaveFile);
-        SaveFile.Click += SaveFile_Click;
+        System.Windows.Forms.Button botaoSaveFile = ferramentas.CreateButton("Salvar códigos atuais em um arquivo");
+        this.Controls.Add(botaoSaveFile);
+        botaoSaveFile.Click += SaveFile_Click;
     }
 
     private void SaveFile_Click(object sender, EventArgs e)
