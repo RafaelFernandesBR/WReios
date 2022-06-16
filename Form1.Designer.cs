@@ -102,23 +102,30 @@ partial class Form1
 
             foreach (var objeto in rastrearCr.objetos)
             {
-                listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
-
-                foreach (var evento in objeto.eventos)
+                try
                 {
-                    if (evento.unidadeDestino == null)
+                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
+
+                    foreach (var evento in objeto.eventos)
                     {
-                        string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
+                        if (evento.unidadeDestino == null)
+                        {
+                            string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
 
-                        listBoxRastreios.Items.Add(eventosRS);
+                            listBoxRastreios.Items.Add(eventosRS);
+                        }
+                        else
+                        {
+                            string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
+
+                            listBoxRastreios.Items.Add(eventosRS);
+                        }
+
                     }
-                    else
-                    {
-                        string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
-
-                        listBoxRastreios.Items.Add(eventosRS);
-                    }
-
+                }
+                catch (Exception ex)
+                {
+                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
                 }
             }
         }

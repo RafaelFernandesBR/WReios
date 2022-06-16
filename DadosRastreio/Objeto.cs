@@ -7,6 +7,7 @@ namespace RasReiios.DadosRastreio
     public class Objeto
     {
         public string codObjeto { get; set; }
+        public string mensagem { get; set; }
         public DateTime dtPrevista { get; set; }
         public List<Evento> eventos { get; set; }
         public string modalidade { get; set; }

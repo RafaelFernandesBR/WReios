@@ -6,16 +6,16 @@ public class Ferramentas
     public System.Windows.Forms.TextBox CampoTx(string? CodigoFile = null)
     {
         //adicionar um campo de edição
-        var textBox1 = new System.Windows.Forms.TextBox();
-        textBox1.Multiline = true;
-        textBox1.Location = new System.Drawing.Point(12, 12);
-        textBox1.Text = CodigoFile;
-        textBox1.Name = "textBox1";
-        textBox1.Size = new System.Drawing.Size(100, 20);
-        textBox1.AccessibleName = "Digite o código de rastreio";
-        textBox1.TabIndex = 0;
+        var textBox = new System.Windows.Forms.TextBox();
+        textBox.Multiline = true;
+        textBox.Location = new System.Drawing.Point(12, 12);
+        textBox.Text = CodigoFile;
+        textBox.Name = "textBox1";
+        textBox.Size = new System.Drawing.Size(100, 20);
+        textBox.AccessibleName = "Digite o código de rastreio";
+        textBox.TabIndex = 0;
 
-        return textBox1;
+        return textBox;
     }
 
     public System.Windows.Forms.Button CreateButton(string Texto)
