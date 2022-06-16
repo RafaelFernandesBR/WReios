@@ -12,36 +12,38 @@ public class Ras
             ListBox lista = (ListBox)sender;
             //copiar o item selecionado
             Clipboard.SetText(lista.SelectedItem.ToString());
+            //não deixar o leitor de telas mudar o foco, quando for pressionado o atalho
+            e.SuppressKeyPress = true;
         }
     }
 
-public void saveFile(string text)
-{
-    //criar um arquivo
-    var file = new System.IO.StreamWriter("Codigo.txt");
-    //escrever no arquivo
-    file.Write(text);
-    //fechar o arquivo
-    file.Close();
-}
+    public void saveFile(string text)
+    {
+        //criar um arquivo
+        var file = new System.IO.StreamWriter("Codigo.txt");
+        //escrever no arquivo
+        file.Write(text);
+        //fechar o arquivo
+        file.Close();
+    }
 
-public string GetTextFile()
-{
-try
-{
-    //criar um arquivo
-    var file = new System.IO.StreamReader("Codigo.txt");
-    //ler o arquivo
-    string text = file.ReadToEnd();
-    //fechar o arquivo
-    file.Close();
-    //retornar o texto
-    return text;
-}
-catch(Exception ex)
-{
-    return null;
-}
-}
+    public string GetTextFile()
+    {
+        try
+        {
+            //criar um arquivo
+            var file = new System.IO.StreamReader("Codigo.txt");
+            //ler o arquivo
+            string text = file.ReadToEnd();
+            //fechar o arquivo
+            file.Close();
+            //retornar o texto
+            return text;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
+    }
 
 }
