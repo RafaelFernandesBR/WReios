@@ -1,3 +1,5 @@
+using NVAccess;
+
 namespace Function.Ras;
 
 public class Ras
@@ -14,6 +16,8 @@ public class Ras
             Clipboard.SetText(lista.SelectedItem.ToString());
             //não deixar o leitor de telas mudar o foco, quando for pressionado o atalho
             e.SuppressKeyPress = true;
+            //falar que o texto foi copiado
+            NVDA.Speak("Texto copiado: " + lista.SelectedItem.ToString());
         }
     }
 

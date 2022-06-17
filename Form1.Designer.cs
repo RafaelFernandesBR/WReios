@@ -1,5 +1,6 @@
 ﻿using RasReiios.rastrear;
 using Function.Ras;
+using NVAccess;
 
 namespace WReios;
 
@@ -70,7 +71,7 @@ partial class Form1
         //capturar o texto do campo
         var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
         Ras.saveFile(TextFBox.Text);
-        MessageBox.Show("Código salvo em arquivo");
+        NVDA.Speak("Código salvo em arquivo");
     }
 
     private void Button1_Click(object sender, EventArgs e)
@@ -134,6 +135,7 @@ partial class Form1
 
         listBoxRastreios.Location = new System.Drawing.Point(200, 200);
         listBoxRastreios.Size = new System.Drawing.Size(100, 100);
+        NVDA.Speak("Pronto!");
         this.Controls.Add(listBoxRastreios);
         //copiar um item da lista com ctrl+c
         listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
