@@ -7,7 +7,7 @@ namespace WReios;
 partial class Form1
 {
     string CodigoFile { get; set; }
-
+    System.Windows.Forms.ListBox listBoxRastreios { get; set; }
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -54,6 +54,7 @@ partial class Form1
         this.Controls.Add(campoEdic);
 
         //botão rastrear
+        this.listBoxRastreios = new System.Windows.Forms.ListBox();
         System.Windows.Forms.Button botaoRastrear = ferramentas.CreateButton("Rastrear");
         this.Controls.Add(botaoRastrear);
         botaoRastrear.Click += Button1_Click;
@@ -76,6 +77,7 @@ partial class Form1
 
     private void Button1_Click(object sender, EventArgs e)
     {
+        NVDA.Speak("Rastreando");
         Ras Ras = new Ras();
 
         //capturar o texto do campo
@@ -92,7 +94,6 @@ partial class Form1
             CodigosRastreios[0] = TextFBox.Text;
         }
 
-        var listBoxRastreios = new System.Windows.Forms.ListBox();
         listBoxRastreios.AccessibleName = "Dados de rastreios";
         //percorrer os códigos de rastreios
         foreach (var CodigoRastreio in CodigosRastreios)
