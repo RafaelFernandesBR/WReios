@@ -113,7 +113,7 @@ partial class Form1
                     {
                         if (evento.unidadeDestino == null)
                         {
-                            string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
+                            string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
 
                             listBoxRastreios.Items.Add(eventosRS);
                         }
