@@ -82,16 +82,17 @@ partial class Form1
 
         //capturar o texto do campo
         var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
-        string[] CodigosRastreios = null;
+        string[] CodigosRastreios;
         //verificar se o texto é multe linhas
-        if (TextFBox.Multiline)
+
+        if (TextFBox.Text.Contains("\n"))
         {
             //separar as linhas
-            CodigosRastreios = TextFBox.Text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            CodigosRastreios = TextFBox.Text.Split(new string[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
         }
         else
         {
-            CodigosRastreios[0] = TextFBox.Text;
+            CodigosRastreios = new string[] { TextFBox.Text };
         }
 
         listBoxRastreios.AccessibleName = "Dados de rastreios";
