@@ -17,22 +17,29 @@ namespace RasReiios.rastrear
 
         public RasReiios.DadosRastreio.Root GetInfoRs()
         {
-            var client = new HttpClient();
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"https://proxyapp.correios.com.br/v1/sro-rastro/{CodigoRastreio}");
-            request.Method = HttpMethod.Get;
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri($"https://proxyapp.correios.com.br/v1/sro-rastro/{CodigoRastreio}");
+                request.Method = HttpMethod.Get;
 
-            request.Headers.Add("Accept", "*/*");
-            request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
+                request.Headers.Add("Accept", "*/*");
+                request.Headers.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
 
-            var response = client.Send(request);
-//obter o json retornado
-            var result = response.Content.ReadAsStringAsync().Result;
+                var response = client.Send(request);
+                //obter o json retornado
+                var result = response.Content.ReadAsStringAsync().Result;
 
-            //transformar o json em objetos csharp
-        var json = JsonConvert.DeserializeObject<Root>(result);
+                //transformar o json em objetos csharp
+                var json = JsonConvert.DeserializeObject<Root>(result);
 
-            return json;
+                return json;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
     }

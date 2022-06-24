@@ -95,52 +95,59 @@ partial class Form1
             CodigosRastreios = new string[] { TextFBox.Text };
         }
 
-        listBoxRastreios.AccessibleName = "Dados de rastreios";
-        //percorrer os códigos de rastreios
-        foreach (var CodigoRastreio in CodigosRastreios)
+        try
         {
-            //rastrear o código
-            Rastreando rastrear = new Rastreando(CodigoRastreio);
-            var rastrearCr = rastrear.GetInfoRs();
-
-            foreach (var objeto in rastrearCr.objetos)
+            listBoxRastreios.AccessibleName = "Dados de rastreios";
+            //percorrer os códigos de rastreios
+            foreach (var CodigoRastreio in CodigosRastreios)
             {
-                try
+                //rastrear o código
+                Rastreando rastrear = new Rastreando(CodigoRastreio);
+                var rastrearCr = rastrear.GetInfoRs();
+
+                foreach (var objeto in rastrearCr.objetos)
                 {
-                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
-
-                    foreach (var evento in objeto.eventos)
+                    try
                     {
-                        if (evento.unidadeDestino == null)
+                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
+
+                        foreach (var evento in objeto.eventos)
                         {
-                            string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
+                            if (evento.unidadeDestino == null)
+                            {
+                                string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
 
-                            listBoxRastreios.Items.Add(eventosRS);
+                                listBoxRastreios.Items.Add(eventosRS);
+                            }
+                            else
+                            {
+                                string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
+
+                                listBoxRastreios.Items.Add(eventosRS);
+                            }
+
                         }
-                        else
-                        {
-                            string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
-
-                            listBoxRastreios.Items.Add(eventosRS);
-                        }
-
+                    }
+                    catch (Exception ex)
+                    {
+                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
                     }
                 }
-                catch (Exception ex)
-                {
-                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
-                }
             }
-        }
-        //selecionar o primeiro item por padrão
-        listBoxRastreios.SelectedIndex = 0;
+            //selecionar o primeiro item por padrão
+            listBoxRastreios.SelectedIndex = 0;
 
-        listBoxRastreios.Location = new System.Drawing.Point(200, 200);
-        listBoxRastreios.Size = new System.Drawing.Size(100, 100);
-        NVDA.Speak("Pronto!");
-        this.Controls.Add(listBoxRastreios);
-        //copiar um item da lista com ctrl+c
-        listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
+            listBoxRastreios.Location = new System.Drawing.Point(200, 200);
+            listBoxRastreios.Size = new System.Drawing.Size(100, 100);
+            NVDA.Speak("Pronto!");
+            this.Controls.Add(listBoxRastreios);
+            //copiar um item da lista com ctrl+c
+            listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
+        }
+        catch (Exception)
+        {
+            NVDA.Speak("Não foi possível rastrear, verifique sua conexão", false);
+        }
     }
 
     #endregion
