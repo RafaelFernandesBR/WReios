@@ -29,4 +29,11 @@ public class Ferramentas
         return button;
     }
 
+    public void PlaySon(string audio)
+    {
+        System.Media.SoundPlayer player = new System.Media.SoundPlayer();
+        player.SoundLocation = audio;
+        player.Play();
+    }
+
 }

@@ -12,6 +12,8 @@ partial class Form1
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
+    private Ras Ras;
+    private Ferramentas ferramentas;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -38,8 +40,8 @@ partial class Form1
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(800, 1000);
         this.Text = "WReios";
-        Ras Ras = new Ras();
-        Ferramentas ferramentas = new Ferramentas();
+        this.Ras = new Ras();
+        this.ferramentas = new Ferramentas();
         this.CodigoFile = Ras.GetTextFile();
         //adicionando o campo
         System.Windows.Forms.TextBox campoEdic = null;
@@ -67,8 +69,6 @@ partial class Form1
 
     private void SaveFile_Click(object sender, EventArgs e)
     {
-        Ras Ras = new Ras();
-
         //capturar o texto do campo
         var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
         Ras.saveFile(TextFBox.Text);
@@ -78,7 +78,6 @@ partial class Form1
     private void Button1_Click(object sender, EventArgs e)
     {
         NVDA.Speak("Rastreando");
-        Ras Ras = new Ras();
 
         //capturar o texto do campo
         var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
@@ -139,7 +138,10 @@ partial class Form1
 
             listBoxRastreios.Location = new System.Drawing.Point(200, 200);
             listBoxRastreios.Size = new System.Drawing.Size(100, 100);
+
             NVDA.Speak("Pronto!");
+            ferramentas.PlaySon("sons/complete.wav");
+
             this.Controls.Add(listBoxRastreios);
             //copiar um item da lista com ctrl+c
             listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
