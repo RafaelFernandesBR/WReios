@@ -7,13 +7,13 @@ namespace WReios;
 partial class Form1
 {
     string CodigoFile { get; set; }
-    System.Windows.Forms.ListBox listBoxRastreios { get; set; }
     /// <summary>
     ///  Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
     private Ras Ras;
     private Ferramentas ferramentas;
+    private ListBox listBoxRastreios;
 
     /// <summary>
     ///  Clean up any resources being used.
@@ -56,7 +56,7 @@ partial class Form1
         this.Controls.Add(campoEdic);
 
         //botão rastrear
-        this.listBoxRastreios = new System.Windows.Forms.ListBox();
+        listBoxRastreios = new System.Windows.Forms.ListBox();
         System.Windows.Forms.Button botaoRastrear = ferramentas.CreateButton("Rastrear");
         this.Controls.Add(botaoRastrear);
         botaoRastrear.Click += Button1_Click;
@@ -93,60 +93,18 @@ partial class Form1
         {
             CodigosRastreios = new string[] { TextFBox.Text };
         }
+        var listBoxRastreiosF = ferramentas.CaixaRastreio(CodigosRastreios, listBoxRastreios);
 
-        try
+        if (listBoxRastreiosF != null)
         {
-            listBoxRastreios.AccessibleName = "Dados de rastreios";
-            //percorrer os códigos de rastreios
-            foreach (var CodigoRastreio in CodigosRastreios)
-            {
-                //rastrear o código
-                Rastreando rastrear = new Rastreando(CodigoRastreio);
-                var rastrearCr = rastrear.GetInfoRs();
-
-                foreach (var objeto in rastrearCr.objetos)
-                {
-                    try
-                    {
-                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
-
-                        foreach (var evento in objeto.eventos)
-                        {
-                            if (evento.unidadeDestino == null)
-                            {
-                                string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
-
-                                listBoxRastreios.Items.Add(eventosRS);
-                            }
-                            else
-                            {
-                                string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
-
-                                listBoxRastreios.Items.Add(eventosRS);
-                            }
-
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
-                    }
-                }
-            }
-            //selecionar o primeiro item por padrão
-            listBoxRastreios.SelectedIndex = 0;
-
-            listBoxRastreios.Location = new System.Drawing.Point(200, 200);
-            listBoxRastreios.Size = new System.Drawing.Size(100, 100);
-
             NVDA.Speak("Pronto!");
             ferramentas.PlaySon("sons/complete.wav");
 
-            this.Controls.Add(listBoxRastreios);
+            this.Controls.Add(listBoxRastreiosF);
             //copiar um item da lista com ctrl+c
             listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
         }
-        catch (Exception)
+        else
         {
             NVDA.Speak("Não foi possível rastrear, verifique sua conexão", false);
         }
