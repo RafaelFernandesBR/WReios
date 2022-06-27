@@ -5,7 +5,7 @@ namespace WReios;
 public class Ferramentas
 {
 
-    public System.Windows.Forms.TextBox CampoTx(string? CodigoFile = null)
+    public TextBox CampoTx(string? CodigoFile = null)
     {
         //adicionar um campo de edição
         var textBox = new System.Windows.Forms.TextBox();
@@ -20,7 +20,7 @@ public class Ferramentas
         return textBox;
     }
 
-    public System.Windows.Forms.Button CreateButton(string Texto)
+    public Button CreateButton(string Texto)
     {
         //criar um botão
         var button = new System.Windows.Forms.Button();
@@ -38,7 +38,7 @@ public class Ferramentas
         player.Play();
     }
 
-    public System.Windows.Forms.ListBox CaixaRastreio(string[] CodigosRastreios, ListBox listBoxRastreios)
+    public ListBox CaixaRastreio(string[] CodigosRastreios, ListBox listBoxRastreios)
     {
         try
         {
