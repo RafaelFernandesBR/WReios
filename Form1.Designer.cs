@@ -55,8 +55,8 @@ partial class Form1
         this.Controls.Add(campoEdic);
 
         //botão rastrear
-        listBoxRastreios = new System.Windows.Forms.ListBox();
-        System.Windows.Forms.Button botaoRastrear = ferramentas.CreateButton("Rastrear");
+        listBoxRastreios = new ListBox();
+        Button botaoRastrear = ferramentas.CreateButton("Rastrear");
         this.Controls.Add(botaoRastrear);
         botaoRastrear.Click += Button1_Click;
 
@@ -74,28 +74,28 @@ partial class Form1
         NVDA.Speak("Código salvo em arquivo");
     }
 
-    private void Button1_Click(object sender, EventArgs e)
+    private async void Button1_Click(object sender, EventArgs e)
     {
-        NVDA.Speak("Rastreando");
-
-        //capturar o texto do campo
-        var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
-        string[] CodigosRastreios;
-        //verificar se o texto é multe linhas
-
-        if (TextFBox.Text.Contains("\n"))
+        try
         {
-            //separar as linhas
-            CodigosRastreios = TextFBox.Text.Split(new string[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
-        }
-        else
-        {
-            CodigosRastreios = new string[] { TextFBox.Text };
-        }
-        var listBoxRastreiosF = ferramentas.CaixaRastreio(CodigosRastreios, listBoxRastreios);
+            NVDA.Speak("Rastreando");
 
-        if (listBoxRastreiosF != null)
-        {
+            //capturar o texto do campo
+            var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
+            string[] CodigosRastreios;
+            //verificar se o texto é multe linhas
+
+            if (TextFBox.Text.Contains("\n"))
+            {
+                //separar as linhas
+                CodigosRastreios = TextFBox.Text.Split(new string[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                CodigosRastreios = new string[] { TextFBox.Text };
+            }
+            var listBoxRastreiosF = await ferramentas.CaixaRastreio(CodigosRastreios, listBoxRastreios);
+
             NVDA.Speak("Pronto!");
             ferramentas.PlaySon("sons/complete.wav");
 
@@ -103,7 +103,7 @@ partial class Form1
             //copiar um item da lista com ctrl+c
             listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
         }
-        else
+        catch (Exception)
         {
             NVDA.Speak("Não foi possível rastrear, verifique sua conexão", false);
         }

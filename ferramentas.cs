@@ -38,7 +38,7 @@ public class Ferramentas
         player.Play();
     }
 
-    public ListBox CaixaRastreio(string[] CodigosRastreios, ListBox listBoxRastreios)
+    public Task<ListBox> CaixaRastreio(string[] CodigosRastreios, ListBox listBoxRastreios)
     {
         try
         {
@@ -85,7 +85,7 @@ public class Ferramentas
             listBoxRastreios.Location = new System.Drawing.Point(200, 200);
             listBoxRastreios.Size = new System.Drawing.Size(100, 100);
 
-            return listBoxRastreios;
+            return Task.FromResult(listBoxRastreios);
         }
         catch (Exception)
         {
