@@ -100,6 +100,7 @@ partial class Form1
             ferramentas.PlaySon("sons/complete.wav");
 
             this.Controls.Add(listBoxRastreiosF);
+            listBoxRastreios.Focus();
             //copiar um item da lista com ctrl+c
             listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
         }
