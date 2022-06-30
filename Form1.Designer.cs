@@ -77,6 +77,7 @@ partial class Form1
 
     private async void Button1_Click(object sender, EventArgs e)
     {
+        //jogar tudo em segundo plano, para não bloquear a tela
         try
         {
             NVDA.Speak("Rastreando");

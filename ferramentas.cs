@@ -51,59 +51,62 @@ public class Ferramentas
 
     public Task<ListBox> CaixaRastreio(string[] CodigosRastreios, ListBox listBoxRastreios)
     {
-        try
+        return Task.Run(() =>
+{
+    try
+    {
+        listBoxRastreios.AccessibleName = "Dados de rastreios";
+        //limpar os itens anteriores
+        listBoxRastreios.Items.Clear();
+        //percorrer os códigos de rastreios
+        foreach (var CodigoRastreio in CodigosRastreios)
         {
-            listBoxRastreios.AccessibleName = "Dados de rastreios";
-            //limpar os itens anteriores
-            listBoxRastreios.Items.Clear();
-            //percorrer os códigos de rastreios
-            foreach (var CodigoRastreio in CodigosRastreios)
+            //rastrear o código
+            Rastreando rastrear = new Rastreando(CodigoRastreio);
+            var rastrearCr = rastrear.GetInfoRs();
+
+            foreach (var objeto in rastrearCr.objetos)
             {
-                //rastrear o código
-                Rastreando rastrear = new Rastreando(CodigoRastreio);
-                var rastrearCr = rastrear.GetInfoRs();
-
-                foreach (var objeto in rastrearCr.objetos)
+                try
                 {
-                    try
-                    {
-                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
+                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\nCategoria: {objeto.tipoPostal.categoria}");
 
-                        foreach (var evento in objeto.eventos)
+                    foreach (var evento in objeto.eventos)
+                    {
+                        if (evento.unidadeDestino == null)
                         {
-                            if (evento.unidadeDestino == null)
-                            {
-                                string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
+                            string eventosRS = $"{evento.descricao} Em {evento.unidade.tipo}, {evento.unidade.endereco.cidade} {evento.unidade.endereco.bairro} {evento.unidade.endereco.logradouro} {evento.unidade.endereco.numero} {evento.unidade.endereco.uf} {evento.dtHrCriado}";
 
-                                listBoxRastreios.Items.Add(eventosRS);
-                            }
-                            else
-                            {
-                                string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
-
-                                listBoxRastreios.Items.Add(eventosRS);
-                            }
-
+                            listBoxRastreios.Items.Add(eventosRS);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
+                        else
+                        {
+                            string eventosRS = $"{evento.descricao} Indo para {evento.unidadeDestino.tipo}, {evento.unidadeDestino.endereco.cidade} {evento.unidadeDestino.endereco.uf} {evento.dtHrCriado}";
+
+                            listBoxRastreios.Items.Add(eventosRS);
+                        }
+
                     }
                 }
+                catch (Exception ex)
+                {
+                    listBoxRastreios.Items.Add($"Código: {objeto.codObjeto}\n{objeto.mensagem}");
+                }
             }
-            //selecionar o primeiro item por padrão
-            listBoxRastreios.SelectedIndex = 0;
-
-            listBoxRastreios.Location = new System.Drawing.Point(200, 200);
-            listBoxRastreios.Size = new System.Drawing.Size(100, 100);
-
-            return Task.FromResult(listBoxRastreios);
         }
-        catch (Exception)
-        {
-            return null;
-        }
+        //selecionar o primeiro item por padrão
+        listBoxRastreios.SelectedIndex = 0;
+
+        listBoxRastreios.Location = new System.Drawing.Point(200, 200);
+        listBoxRastreios.Size = new System.Drawing.Size(100, 100);
+
+        return listBoxRastreios;
+    }
+    catch (Exception)
+    {
+        return null;
+    }
+});
     }
 
 }
