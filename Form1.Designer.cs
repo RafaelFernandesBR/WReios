@@ -13,6 +13,7 @@ partial class Form1
     private Ras Ras;
     private Ferramentas ferramentas;
     private ListBox listBoxRastreios;
+    private bool parar;
 
     /// <summary>
     ///  Clean up any resources being used.

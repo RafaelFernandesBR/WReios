@@ -20,6 +20,17 @@ public class Ferramentas
         return textBox;
     }
 
+    public CheckBox CreateCheckBox(string Texto)
+    {
+        //criar um checkbox
+        var checkBox = new System.Windows.Forms.CheckBox();
+        checkBox.Text = Texto;
+        checkBox.Location = new System.Drawing.Point(100, 100);
+        checkBox.Size = new System.Drawing.Size(100, 100);
+
+        return checkBox;
+    }
+
     public Button CreateButton(string Texto)
     {
         //criar um botão
@@ -43,6 +54,8 @@ public class Ferramentas
         try
         {
             listBoxRastreios.AccessibleName = "Dados de rastreios";
+            //limpar os itens anteriores
+            listBoxRastreios.Items.Clear();
             //percorrer os códigos de rastreios
             foreach (var CodigoRastreio in CodigosRastreios)
             {
