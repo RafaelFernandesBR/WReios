@@ -77,27 +77,26 @@ partial class Form1
 
     private async void Button1_Click(object sender, EventArgs e)
     {
-        //jogar tudo em segundo plano, para não bloquear a tela
-        try
+        NVDA.Speak("Rastreando");
+
+        //capturar o texto do campo
+        var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
+        string[] CodigosRastreios;
+        //verificar se o texto é multe linhas
+
+        if (TextFBox.Text.Contains("\n"))
         {
-            NVDA.Speak("Rastreando");
+            //separar as linhas
+            CodigosRastreios = TextFBox.Text.Split(new string[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
+        }
+        else
+        {
+            CodigosRastreios = new string[] { TextFBox.Text };
+        }
+        var listBoxRastreiosF = await ferramentas.CaixaRastreio(CodigosRastreios, listBoxRastreios);
 
-            //capturar o texto do campo
-            var TextFBox = this.Controls.Find("textBox1", true).FirstOrDefault() as System.Windows.Forms.TextBox;
-            string[] CodigosRastreios;
-            //verificar se o texto é multe linhas
-
-            if (TextFBox.Text.Contains("\n"))
-            {
-                //separar as linhas
-                CodigosRastreios = TextFBox.Text.Split(new string[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
-            }
-            else
-            {
-                CodigosRastreios = new string[] { TextFBox.Text };
-            }
-            var listBoxRastreiosF = await ferramentas.CaixaRastreio(CodigosRastreios, listBoxRastreios);
-
+        if (listBoxRastreiosF != null)
+        {
             NVDA.Speak("Pronto!");
             ferramentas.PlaySon("sons/complete.wav");
 
@@ -106,7 +105,7 @@ partial class Form1
             //copiar um item da lista com ctrl+c
             listBoxRastreios.KeyDown += new KeyEventHandler(Ras.CopyItem);
         }
-        catch (Exception)
+        else
         {
             NVDA.Speak("Não foi possível rastrear, verifique sua conexão", false);
         }
